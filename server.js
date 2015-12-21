@@ -32,11 +32,11 @@ router.route('/breweries')
   .post(breweryController.postBreweries)
   .get(breweryController.getBreweries);
 router.route('/breweries/:brewery_id')
+  .post(breweryController.addBeer)
   .get(breweryController.getBrewery)
   .put(breweryController.putBrewery)
   .delete(breweryController.deleteBrewery);
-router.route('/breweries/:brewery_id/beers')
-  .post(breweryController.addBeer);
+
 
 app.use('/api', router);
 

@@ -1,4 +1,5 @@
 var Brewery = require('../models/brewery');
+var Beer = require('../models/beer');
 
 exports.postBreweries = function(req, res) {
   // Create a new instance of the Beer model
@@ -60,16 +61,16 @@ exports.deleteBrewery = function(req, res){
 
 exports.addBeer = function(req, res){
   Brewery.findById(req.params.brewery_id, function(err, brewery){
-    brewery.beers.push(new Beer({
-      name: req.body.name,
-      type: req.body.type,
-      seasonal: req.body.seasonal
-    }));
-
-    brewery.save(function(err){
-      if(err)
+    var beer = new Beer();
+        beer.name = req.body.name;
+        beer.type = req.body.type;
+        beer.seasonal = req.body.seasonal;
+        beer.brewery = brewery.name;
+        beer.abv = req.body.abv;
+    beer.save(function(err){
+      if (err)
         res.send(err);
-      res.json({message: 'Beer saved!'});
+      res.json({message: 'Beer added to ' + brewery.name});
     });
   });
-};
+  };
