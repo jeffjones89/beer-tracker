@@ -67,6 +67,7 @@ exports.addBeer = function(req, res){
         beer.seasonal = req.body.seasonal;
         beer.brewery = brewery.name;
         beer.abv = req.body.abv;
+        beer.userId = req.user._id;
     beer.save(function(err){
       if (err)
         res.send(err);

@@ -9,7 +9,8 @@ var BeerSchema = new mongoose.Schema({
     votes: Number
   },
   brewery: {type: String, required: true},
-  abv: {type: Number}
+  abv: {type: Number},
+  userId: {type: String, required: true}
 });
 //brewery schema
 var BrewerySchema = new mongoose.Schema({
@@ -34,7 +35,7 @@ var UserSchema = new mongoose.Schema({
   }
 });
 
-UserScehma.pre('save', function(cb){
+UserSchema.pre('save', function(cb){
   var user = this;
   if(!user.isModified('password')) return cb();
 
@@ -48,6 +49,13 @@ UserScehma.pre('save', function(cb){
     });
   });
 });
+//using bcrypt to verify password
+UserSchema.methods.verifyPassword = function(password, cb){
+  bcrypt.compare(password, this.password, function(err, isMatch){
+    if (err) return cb(err);
+    cb(null, isMatch);
+  });
+};
 
 var UserModel = mongoose.model('User', UserSchema);
 var BeerModel = mongoose.model("Beer", BeerSchema);

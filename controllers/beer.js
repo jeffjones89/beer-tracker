@@ -26,7 +26,7 @@ exports.getBeer = function(req, res) {
 // Create endpoint /api/beers/:beer_id for PUT
 exports.putBeer = function(req, res) {
   // Use the Beer model to find a specific beer
-  Beer.findById(req.params.beer_id, function(err, beer) {
+  Beer.update(req.params.beer_id, function(err, beer) {
     if (err)
       res.send(err);
 
@@ -44,7 +44,7 @@ exports.putBeer = function(req, res) {
 
 exports.deleteBeer = function(req, res) {
 
-  Beer.findByIdAndRemove(req.params.beer_id, function(err) {
+  Beer.remove({userId: req.user._id, _id: req.params.beer_id } , function(err) {
     if (err)
       res.send(err);
 

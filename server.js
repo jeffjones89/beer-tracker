@@ -3,6 +3,10 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var beerController = require('./controllers/beer');
 var breweryController = require('./controllers/brewery');
+var userController = require('./controllers/user');
+var passport = require('passport');
+var authController = require('./controllers/auth');
+var path = require('path');
 
 
 
@@ -16,27 +20,38 @@ var app = express();
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+//initialize passport
+app.use(passport.initialize());
 //instantiating express router
 var router = express.Router();
 
-//routing for collection API
+//serving Angular Index page
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname + '/client/index.html'));
+});
+
+//routing for API calls below
 router.route('/beers')
-  .get(beerController.getBeers);
+  .get(authController.isAuthenticated, beerController.getBeers);
 //individual beer routing
 router.route('/beers/:beer_id')
   .get(beerController.getBeer)
-  .put(beerController.putBeer)
-  .delete(beerController.deleteBeer);
+  .put(authController.isAuthenticated, beerController.putBeer)
+  .delete(authController.isAuthenticated, beerController.deleteBeer);
 //routing for breweries
 router.route('/breweries')
-  .post(breweryController.postBreweries)
+  .post(authController.isAuthenticated, breweryController.postBreweries)
   .get(breweryController.getBreweries);
 router.route('/breweries/:brewery_id')
-  .post(breweryController.addBeer)
+  .post(authController.isAuthenticated, breweryController.addBeer)
   .get(breweryController.getBrewery)
-  .put(breweryController.putBrewery)
-  .delete(breweryController.deleteBrewery);
+  .put(authController.isAuthenticated, breweryController.putBrewery)
+  .delete(authController.isAuthenticated, breweryController.deleteBrewery);
 
+router.route('/users')
+  .post(userController.postUsers)
+  .get(userController.getUsers);
 
 app.use('/api', router);
 
