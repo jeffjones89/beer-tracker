@@ -1,10 +1,10 @@
 var express = require('express'),
-    userRouter = express.Router(),
+    router = express.Router(),
     passport = require('passport');
     User = require('../models/user.js');
 
 
-userRouter.post('/register', function(req, res) {
+router.post('/register', function(req, res) {
   User.register(new User({ username: req.body.username }), req.body.password, function(err, account) {
     if (err) {
       return res.status(500).json({err: err});
@@ -15,7 +15,7 @@ userRouter.post('/register', function(req, res) {
   });
 });
 
-userRouter.post('/login', function(req, res, next) {
+router.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     if (err) {
       return res.status(500).json({err: err});
@@ -32,9 +32,9 @@ userRouter.post('/login', function(req, res, next) {
   })(req, res, next);
 });
 
-userRouter.get('/logout', function(req, res) {
+router.get('/logout', function(req, res) {
   req.logout();
   res.status(200).json({status: 'Bye!'});
 });
 
-module.exports = userRouter;
+module.exports = router;
