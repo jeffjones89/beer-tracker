@@ -5,9 +5,8 @@
       "BeerFactory",
       BeerIndexControllerFunction
     ]);
-    
+
     function BeerIndexControllerFunction(BeerFactory){
       this.beers = BeerFactory.query();
-      this.test = "Hello!"
     }
 }());

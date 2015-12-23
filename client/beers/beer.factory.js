@@ -8,5 +8,4 @@
     function BeerFactoryFunction($resource){
       return $resource("/api/beers/:id");
     }
-
 }());

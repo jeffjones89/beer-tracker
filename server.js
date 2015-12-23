@@ -1,15 +1,14 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var hash = require('bcrypt-nodejs');
 var beerController = require('./controllers/beer');
 var breweryController = require('./controllers/brewery');
 var userController = require('./controllers/user');
 var passport = require('passport');
-var authController = require('./controllers/auth');
+var localStrategy = require('passport-local' ).Strategy;
+var User = require('./models/user');
 var path = require('path');
-
-
-
 //production or local port
 var port = process.env.PORT || 3000;
 //connect to mongoose DB
@@ -24,6 +23,12 @@ app.use(bodyParser.urlencoded({
 app.use("/", express.static(path.join(__dirname + "/client")));
 //initialize passport
 app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 //instantiating express router
 var router = express.Router();
 
@@ -34,27 +39,42 @@ app.get('/', function(req, res) {
 
 //routing for API calls below
 router.route('/beers')
-  .get(authController.isAuthenticated, beerController.getBeers);
+  .get(beerController.getBeers);
 //individual beer routing
 router.route('/beers/:beer_id')
   .get(beerController.getBeer)
-  .put(authController.isAuthenticated, beerController.putBeer)
-  .delete(authController.isAuthenticated, beerController.deleteBeer);
+  .put(beerController.putBeer)
+  .delete(beerController.deleteBeer);
 //routing for breweries
 router.route('/breweries')
-  .post(authController.isAuthenticated, breweryController.postBreweries)
+  .post(breweryController.postBreweries)
   .get(breweryController.getBreweries);
 router.route('/breweries/:brewery_id')
-  .post(authController.isAuthenticated, breweryController.addBeer)
+  .post(breweryController.addBeer)
   .get(breweryController.getBrewery)
-  .put(authController.isAuthenticated, breweryController.putBrewery)
-  .delete(authController.isAuthenticated, breweryController.deleteBrewery);
+  .put(breweryController.putBrewery)
+  .delete(breweryController.deleteBrewery);
 //user routing
-router.route('/users')
-  .post(userController.postUsers)
-  .get(userController.getUsers);
 
 app.use('/api', router);
+//instantiating user router
+var userRoutes = require('./controllers/user.js');
+app.use('/user', userRoutes);
+
+// error hndlers
+app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+app.use(function(err, req, res) {
+  res.status(err.status || 500);
+  res.end(JSON.stringify({
+    message: err.message,
+    error: {}
+  }));
+});
 
 app.listen(port);
 console.log('Rating beers on port ' + port);
