@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-ng-app = "beerShare">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>Beer World</title>
+  <!-- Angular JS libraries -->
+  <script src="libs/angular/angular.min.js"></script>
+  <script src="libs/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="libs/angular-resource/angular-resource.min.js"></script>
+  <script src="libs/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <!-- Bootstrap CSS Only -->
+  <link rel="stylesheet" href="libs/bootstrap-css-only/css/bootstrap.min.css">
+  <link rel="stylesheet" href="libs/bootstrap-css-only/css/bootstrap-theme.min.css">
+  <!-- Custom Angular -->
+  <script src="main.js"></script>
+  <script src="beers/beer.factory.js"></script>
+  <script src="beers/beer.controller.js"></script>
 </head>
 <body>
-  <h1>Testing</h1>
+  <div class="page-header">
+  <h1>Example page header <small>Subtext for header</small></h1>
+  <ul class="nav nav-tabs">
+  <li role="presentation" class="active"><a data-ui-sref="beerIndex">Home</a></li>
+  <li role="presentation"><a href="#">Profile</a></li>
+  <li role="presentation"><a href="#">Messages</a></li>
+</ul>
+</div>
+  <div data-ui-view></div>
 </body>
 </html>

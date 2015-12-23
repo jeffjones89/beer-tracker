@@ -1,0 +1,25 @@
+{
+  "name": "rate_a_beer",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "Jeff Jones <jeff.jones1@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/jeffjones89/beer-tracker",
+  "moduleType": [
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "ui-router#~0.2.15",
+    "angular": "~1.4.8",
+    "ui-bootstrap": "~0.14.3"
+  }
+}

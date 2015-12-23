@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+app.use("/", express.static(path.join(__dirname + "/client")));
 //initialize passport
 app.use(passport.initialize());
 //instantiating express router
@@ -28,7 +29,7 @@ var router = express.Router();
 
 //serving Angular Index page
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/client/index.html'));
+    res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
 //routing for API calls below
@@ -48,7 +49,7 @@ router.route('/breweries/:brewery_id')
   .get(breweryController.getBrewery)
   .put(authController.isAuthenticated, breweryController.putBrewery)
   .delete(authController.isAuthenticated, breweryController.deleteBrewery);
-
+//user routing
 router.route('/users')
   .post(userController.postUsers)
   .get(userController.getUsers);
