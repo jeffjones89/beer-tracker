@@ -14,19 +14,25 @@
   <!-- Custom Angular -->
   <script src="main.js"></script>
   <script src="beers/beer.factory.js"></script>
-  <script src="beers/beer.controller.js"></script>
+  <script src="beers/beerIndex.controller.js"></script>
+  <script src="beers/beerCreate.controller.js"></script>
   <script src="users/authentication.service.js"></script>
   <script src="users/login.controller.js"></script>
+  <script src="users/logout.controller.js"></script>
+  <script src="users/register.controller.js"></script>
 </head>
 <body>
-  <div class="page-header">
+  <div class="page-header" ng-controller = "logoutController">
   <h1>Example page header <small>Subtext for header</small></h1>
   <ul class="nav nav-tabs">
-  <li role="presentation" class="active"><a data-ui-sref="beerIndex">Home</a></li>
+  <li role="presentation" class="active"><a data-ui-sref="beerIndex">Beers</a></li>
+  <li role="presentation"><a ng-click ="logout()">Logout</a></li>
+  <li role="presentation"><a href="#">Breweries</a></li>
   <li role="presentation"><a href="#">Profile</a></li>
-  <li role="presentation"><a href="#">Messages</a></li>
 </ul>
 </div>
+<div class="container">
   <div data-ui-view></div>
+</div>
 </body>
 </html>

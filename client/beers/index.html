@@ -1,9 +1,16 @@
 <h2>Beer Index!</h2>
+<a data-ui-sref="newBeer"> Add New Beer </a> 
 <div data-ng-repeat="beer in BeerIndexViewModel.beers">
-  <button type="button" class="btn btn-default" ng-click = "isCollapsed = !isCollapsed">{{beer.name}} -- {{beer.brewery}}</button>
+  <button type="button" class="btn btn-primary" ng-click = "isCollapsed = !isCollapsed"> {{beer.name}} -- Brewer: {{beer.brewery}}</button>
   <hr>
 
   <div uib-collapse="!isCollapsed">
-    <div class="well well-lg">Alcohol by Volume:  {{beer.abv}}</div>
+    <div class="well well-sm">
+      <ul>
+        <li>
+        Alcohol by Volume:  {{beer.abv}}
+        </li>
+      </ul>
+    </div>
   </div>
 </div>

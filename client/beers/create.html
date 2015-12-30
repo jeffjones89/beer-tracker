@@ -1,0 +1,11 @@
+<div class="col-md-4">
+  <h2>Add a New Beer</h2>
+  <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
+  <form class="form" ng-submit = "newBeer()">
+    <div class="form-group">
+      <label>Beer Name</label>
+      <input type="text" class="form-control" name="beerName" ng-model="beerForm.name">
+    </div>
+
+  </form>
+</div>

@@ -20,7 +20,7 @@
 
           //error
           .catch(function(){
-            console.log($scope.loginForm)
+            console.log($scope.loginForm);
             $scope.error = true;
              $scope.errorMessage = "Invalid username and/or password";
              $scope.disabled = false;

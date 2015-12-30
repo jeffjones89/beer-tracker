@@ -67,7 +67,6 @@ router.route('/breweries/:brewery_id')
   .put(breweryController.putBrewery)
   .delete(breweryController.deleteBrewery);
 //user routing
-
 app.use('/api', router);
 //instantiating user router
 var userRoutes = require('./controllers/user.js');
